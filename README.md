@@ -1,7 +1,2 @@
 # AI-project
-We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two.
-
-Suggested tools so far are:
-Python >= 3.0
-TextBlob, https://textblob.readthedocs.org/en/dev/
-NLTK, http://www.nltk.org
+We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two alternatives. We will do this by implementing a heuristic, where we will research which variables should be included and give them a certain weight. If we have enough time, we will try to improve the heuristic by applying some sort of machine learning to the heuristic. If this is the case, it will probably be a simple version of policy gradient reinforcement learning (pgrl). We will work in python >= 3.0 and use some sort of natural language library to do the statistical analysis of the texts. Example libraries are TextBlob (https://textblob.readthedocs.org/en/dev) and the Natural Language Tool Kit (http://www.nltk.org)
