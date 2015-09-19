@@ -1,2 +1,19 @@
-# AI-project
-We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two alternatives. We will do this by implementing a heuristic, where we will research which variables should be included and give them a certain weight. If we have enough time, we will try to improve the heuristic by applying some sort of machine learning to the heuristic. If this is the case, it will probably be a simple version of policy gradient reinforcement learning (pgrl). We will work in python >= 3.0 and use some sort of natural language library to do the statistical analysis of the texts. Example libraries are TextBlob (https://textblob.readthedocs.org/en/dev) and the Natural Language Tool Kit (http://www.nltk.org)
+ The AI project
+================
+Team members:
+-------------
+   * Sarah Berenji
+   * Andreas Forstén
+   * Hannes Leskelä
+   * Josefine Letzner
+
+Project goal:
+-------------
+To implement a text analyser that, although on a basic level, correctly analyses and cathegorizes text.a
+The lowest grade that we will aim for is C, but due to limited time and resouces we won't aim for an A from the start. If the project work load is easier than expected, then the target grade might change to a higer one.
+For information regarding the requirements for each grade, please see this page: [project topics](https://www.kth.se/social/course/DD2380/subgroup/ht-2015-ai15/page/topics-4/)
+
+Tools:
+------
+We are going to use Python >= 3.0 to write the text analyser.
+Tools will be added as the project goes along.
