@@ -61,3 +61,13 @@ and it will be installed. To deactivate the virtual environment, simply issue:
    (venv)$ deactivate
 
 and your prompt will return to normal. If you issue any "pip install" commands, they will now be placed in your systems python directories as usual. 
+
+### Checking code quality with pylint
+
+pylint can be installed in your virtual environment with:
+
+   (venv)$ pip install pylint
+
+we also recommend using pre-commit hooks to automatically check your code with pylint. To initiate the pre-commit hook you can link it to the .git/hooks directory. Simply do:
+
+'ln -s /full/path/to/the/git/root/directory/Scripts/pylint_test_suite.py /full/path/to/the/git/root/directory/.git/hooks/pre-commit'
