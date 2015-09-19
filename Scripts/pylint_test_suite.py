@@ -7,7 +7,7 @@ import re
 import sys
 import subprocess
 import collections
-import ConfigParser
+import configparser
 
 
 ExecutionResult = collections.namedtuple(
@@ -42,6 +42,7 @@ def _get_list_of_committed_files():
     output = subprocess.check_output(
         diff_index_cmd.split()
     )
+    output = (output.decode('utf-8'))
     for result in output.split('\n'):
         if result != '':
             result = result.split()
@@ -61,7 +62,7 @@ def _is_python_file(filename):
     if filename.endswith('.py'):
         return True
     else:
-        with open(filename, 'r') as file_handle:
+        with open(filename, 'r', encoding='utf-8') as file_handle:
             first_line = file_handle.readline()
         return 'python' in first_line and '#!' in first_line
 
@@ -171,6 +172,7 @@ def check_repo(
             sys.exit(1)
 
         # Verify the score
+        out = out.decode('utf-8')
         score = _parse_score(out)
         if score >= float(limit):
             status = 'PASSED'
