@@ -6,3 +6,6 @@
 # Temporary files left by emacs or vim
 *~
 *.swp
+
+# Ignore the virtual environment
+/venv
