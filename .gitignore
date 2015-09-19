@@ -1,0 +1,8 @@
+# Files from pdflatex I think we shouldn't keep backed up
+*.aux
+*.pdf
+*.log
+
+# Temporary files left by emacs or vim
+*~
+*.swp
