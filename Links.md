@@ -2,6 +2,8 @@ Document classification sources:
 https://en.wikipedia.org/wiki/Document_classification
 Above refers to this page, which is much more up our alley:
 https://en.wikipedia.org/wiki/Natural_language_processing
+Which in turn refers to this (note the part about HMM in topic segmentation):
+https://en.wikipedia.org/wiki/Text_segmentation
 
 Python library sources:
 TextBlob, https://textblob.readthedocs.org/en/dev/ (Do note that TextBlob is built upon NLTK)
