@@ -71,3 +71,10 @@ pylint can be installed in your virtual environment with:
 we also recommend using pre-commit hooks to automatically check your code with pylint. To initiate the pre-commit hook you can link it to the .git/hooks directory. Simply do:
 
 'ln -s /full/path/to/the/git/root/directory/Scripts/pylint_test_suite.py /full/path/to/the/git/root/directory/.git/hooks/pre-commit'
+
+
+### Quick setup of the packages required in the virtual environment:
+
+Issuing the following command after setting up the virtual environment will download all the packages that is necessary for running the project:
+
+   $ pip install -r requirements.txt
