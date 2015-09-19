@@ -112,8 +112,8 @@ def check_repo(
             if _is_python_file(filename):
                 python_files.append((filename, None))
         except IOError:
-            print 'File not found (probably deleted): {}\t\tSKIPPED'.format(
-                filename)
+            print('File not found (probably deleted): {}\t\tSKIPPED'.format(
+                filename))
 
     # Don't do anything if there are no Python files
     if len(python_files) == 0:
