@@ -1,8 +1,10 @@
 Document classification sources:
 https://en.wikipedia.org/wiki/Document_classification
+Above refers to this page, which is much more up our alley:
+https://en.wikipedia.org/wiki/Natural_language_processing
 
 Python library sources:
-TextBlob, https://textblob.readthedocs.org/en/dev/
+TextBlob, https://textblob.readthedocs.org/en/dev/ (Do note that TextBlob is built upon NLTK)
 NLTK, http://www.nltk.org
 
 Python style guide (for writing correct code):
