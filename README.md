@@ -23,10 +23,10 @@ Setting up the work environment:
 
 ### Installing the necessities:
 Start by making sure that you've got a working python3 installation on your system:
-
+```
    $ python3 --version
    Python 3.4.0
-
+```
 If the output isn't something in the likes of the above then make sure that you install a working version on your system.
 Next, I highly suggest that you install virtualenv so that you can work in a special virtual environment for this project. This is made easiest with 'pip'. First check and see if you have pip3:
 
