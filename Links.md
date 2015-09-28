@@ -14,3 +14,6 @@ https://www.python.org/dev/peps/pep-0008/
 
 Virtual environments:
 http://docs.python-guide.org/en/latest/dev/virtualenvs/
+
+Book on much of what we need, especially chapter 6:
+http://www.nltk.org/book/
