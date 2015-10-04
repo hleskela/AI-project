@@ -4,6 +4,7 @@
 \usepackage[utf8x]{inputenc}
 \usepackage{amsmath}
 \usepackage{graphicx}
+\usepackage{fixltx2e}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{array}
 
@@ -30,15 +31,53 @@ This project was fun, rewarding, had awesome results and yielded in like fifty i
 \tableofcontents
 \newpage
 
-\section{Introduction}
+\section*{Introduction}
+
+
+\vspace{3mm}
+
+\subsection*{Objective}
+
+Text analysis as a discipline has been around for decades, and the growing need for handling large amounts of unstructured data means that the relevance of the discipline is ever growing\textsupercript{1}. As an example, it is estimated that 62 billion e-mails are sent every day\textsuperscript{2}.  Handling the challenge of the surge of information caused by the arrival of the Internet spawned many new techniques for doing analysis, and in this paper a case study of the subject is done with the aid of \textit{Wikipedia}. 
+
+\vspace{3mm}
+
+As of today (October 2015), almost five million articles have been published on the English version of Wikipedia\textsuperscript{3}. The articles are sorted in categories and so-called portals, which mean that they provide a good opportunity for testing text analysis techniques on large amounts of data. By using \textit{TextBlob}, which is built on top of the \textit{Natural Language ToolKit} (\textbf{NLTK}) and \textit{pattern}\textsuperscript{4}, an attempt to correctly assign categories to Wikipedia articles is made. 
+
+\vspace{3mm}
+
+\subsection*{Problem Statement}
+
+\vspace{3mm}
+
+- What techniques are well suited to the problem of text categorization? What are their respective advantages and disadvantages?
+
+\vspace{3mm}
+
+- What are the difficulties in text categorization? Are certain texts harder to correctly categorize than others, and if so, why?
+
+\vspace{3mm}
+
+- Wikipedia has several layers of categories and sub-categories. Can the categorization be made correctly for even more specialized sub-categories, or is there some limit as to how accurately we can assign them?
+
+
+\vspace{3mm}
+
+1. Grimes, Seth. “A Brief History of Text Analytics”, b-eye-network, October 20, 2007.
+
+2. “Mastering new Challenges in Text Analytics”, IBM Business Analytics, May 2010, p. 1.
+
+3. https://en.wikipedia.org/wiki/Wikipedia:About. Retrieved 2015-10-04.
+
+4. https://textblob.readthedocs.org/en/dev/. Retrieved 2015-10-04.
+
+\section*{Method}  
+
+\section*{Results}
+
+\section*{Discussion}
+
 
 We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two alternatives. We will do this by implementing a heuristic that uses hidden Markov models, where we will research which variables should be included and give them a certain weight. If we have enough time, we will try to improve the heuristic by applying some sort of machine learning to the heuristic. If this is the case, it will probably be a simple version of policy gradient reinforcement learning (pgrl). We will work in python \textgreater= 3.0 and use some sort of natural language library to do the statistical analysis of the texts. Example libraries are TextBlob (https://textblob.readthedocs.org/en/dev) and the Natural Language Tool Kit (http://www.nltk.org)
 \newline
-
-\section{Method}  
-
-\section{Results}
-
-\section{Discussion}
-
 \end{document}
