@@ -13,7 +13,7 @@ git commit - create a commit of all the changes that you have added (i.e. change
 git branch - view your branches and on what branch you are
 git branch <branch-name> - creates a new branch so that you don't work on master, the main branch.
 git checkout <branch-name> - switch to the branch stated, i.e. start working on a new branch.
-
+git reset <filename> - undo a "git add"
 
 
 
