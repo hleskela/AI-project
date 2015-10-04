@@ -1,4 +1,4 @@
-Document classification sources:
+B1;2802;0cDocument classification sources:
 https://en.wikipedia.org/wiki/Document_classification
 Above refers to this page, which is much more up our alley:
 https://en.wikipedia.org/wiki/Natural_language_processing
@@ -8,6 +8,7 @@ https://en.wikipedia.org/wiki/Text_segmentation
 Python library sources:
 TextBlob, https://textblob.readthedocs.org/en/dev/ (Do note that TextBlob is built upon NLTK)
 NLTK, http://www.nltk.org
+BlockSpring, https://open.blockspring.com/tags/88
 
 Python style guide (for writing correct code):
 https://www.python.org/dev/peps/pep-0008/
