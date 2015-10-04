@@ -62,10 +62,13 @@ def _is_python_file(filename):
     if filename.endswith('.py'):
         return True
     else:
-        with open(filename, 'r', encoding='utf-8') as file_handle:
-            first_line = file_handle.readline()
-        return 'python' in first_line and '#!' in first_line
-
+        try:
+            with open(filename, 'r', encoding='utf-8') as file_handle:
+                first_line = file_handle.readline()
+                return 'python' in first_line and '#!' in first_line
+        except UnicodeDecodeError:
+            print("Not a utf-8 encoded file, will not check")
+            return False
 
 _SCORE_REGEXP = re.compile(
     r'^Your\ code\ has\ been\ rated\ at\ (\-?[0-9\.]+)/10')
