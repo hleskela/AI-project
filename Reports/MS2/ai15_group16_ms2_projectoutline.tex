@@ -1,0 +1,222 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{fixltx2e}
+\usepackage[colorinlistoftodos]{todonotes}
+\usepackage{array}
+
+\title{Analyzing and categorizing Wikipedia articles using Python3 and TextBlob}
+\author{
+  Berenji, Sarah\\
+  \texttt{sarah.berenji@gmail.com}
+  \and
+  Forstén, Andreas\\
+  \texttt{andreasforsten@gmail.com}
+  \and
+  Leskelä, Hannes\\
+  \texttt{hleskela@kth.se}
+  \and
+  Letzner, Josefine\\
+    \texttt{joletzner@gmail.com}
+}
+\date{2015-10-04}
+\begin{document}
+\maketitle
+\section*{Abstract}
+In this project we are trying to develop a text analyser where we focus on categorizing the content of Wikipedia articles. In order to gather a dataset of Wikipedia articles, we use Blockspring and the results will be given to a text analyser which is based on an open source library called TextBlob. The first section of this paper describes the aim of the project. After a discussion about the different existing methods for NLP in section 2, we provide our method and the tools we are going to use. \textcolor{red}{ We end the paper in section 4 by ???}
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+
+
+\vspace{3mm}
+
+\subsection{Objective}
+
+Text analysis as a discipline has been around for decades, and the growing need for handling large amounts of unstructured data means that the relevance of the discipline is ever growing\textsuperscript{1}. As an example, it is estimated that 62 billion e-mails are sent per day, and every day searchable web sites add enough information to fill millions of books\textsuperscript{2}.  Handling the challenge of the surge of information caused by the arrival of the Internet spawned many new techniques for doing analysis, and in this paper a case study of the subject is done with the aid of \textit{Wikipedia}. 
+
+\vspace{3mm}
+
+As of today (October 2015), almost five million articles have been published on the English version of Wikipedia\textsuperscript{3}. The articles are sorted in categories and so-called portals, which mean that they provide a good opportunity for testing text analysis techniques on large amounts of data. By using \textit{TextBlob}, which is built on top of the \textit{Natural Language ToolKit} (\textbf{NLTK}) and \textit{pattern}\textsuperscript{4}, an attempt to correctly assign categories to Wikipedia articles was made, with results analysed and discussed in this paper. 
+
+\vspace{3mm}
+
+\subsection{Problem Statement}
+
+\vspace{3mm}
+
+- What techniques are well suited to the problem of text categorization? What are their respective advantages and disadvantages?
+
+\vspace{3mm}
+
+- What are the difficulties in text categorization? Are certain texts harder to correctly categorize than others, and if so, why?
+
+\vspace{3mm}
+
+- Wikipedia has several layers of categories and sub-categories. Can the categorization be made correctly for even more specialized sub-categories, or is there some limit as to how accurately we can assign them?
+
+
+\vspace{3mm}
+
+
+\section{Background}
+
+\vspace{3mm}
+
+The problem of trying to categorise texts based on their content is a problem in the field of \textit{Natural language processing} (\textbf{NLP}). NLP focuses on the questions on how to make computers interact with human language in one way or another.\\
+
+Exactly how far the history of NLP stretches back in time is a matter of debate, but many would say that is starts around 1950 when Alan Turing published an article in which he proposed the "Turing test", which did not actually say much about NLP, but set a criterion for computer intelligence which is used until this day \textsuperscript{5}. To pass this test a computer has to pass as a human after being interrogated by a person. Many methods for solving these kind of problems have been tried and numerous people have contributed to the knowledge we have about NLP today. In the late 1980's NLP as a discipline saw something of a revolution \textsuperscript{6}. At this point the computational power had become sufficient enough to use machine learning to solve NLP problems. In what follows some different methods are briefly over-viewed and how they apply to the specific questions stated in this report.\\
+
+Maybe the most intuitive and simple way of dealing with the problem of text classification is to view it as a \textit{data compression} problem. Even though it may seem as if words can be combined in an infinite number of ways, there are often recurring patterns that can be recognized \textsuperscript{5}. Storing patterns will eventually end up in a language model \textsuperscript{7} which is a probability distribution over a sequence of words. With the computational power available today it is not reasonable to try to store all these patterns without processing, since they can contain several tens of thousands of words or more. The solution to this is to compress the data. There are different algorithms for doing this. Two commonly used are the \textit{Lempel-Ziv-Welch-algorithm} (\textbf{LZW}) and \textit{Huffman}\textsuperscript{8}. A LZW compression algorithm takes each input sequence of bits and creates an entry in a table for that particular bit pattern, consisting of the pattern itself and a shorter code. As input is read, any pattern that has been read before results in the substitution of the shorter code, effectively compressing the total amount of input.\\One advantage of this approach is its simplicity. However, there are several drawbacks apart from the need of memory in order to get a decent dictionary; slow running times being one\textsuperscript{9}. \\
+
+Another method which will not be mentioned much here but more in the chapter "method", as this was the method chosen for solving the problem stated in this report, is the machine learning based approach. There are numerous ways to implement this, but to summarise them they are probabilistic algorithms that can be trained in different ways (e.g. supervised, or unsupervised) so that they can later recognise handle data that they have not previously processed already\textsuperscript{10}. A family of such algorithms go under the name of Naive Bayes. What these have in common is that they assume independence between features. This makes it possible to calculate the probability of events separately, and with these probabilities the joint probability of the separate events is found, and the option which has greatest probability is chosen. \textcolor{red}{lägga till exempel?}. \\
+
+\noindent Support vector machines.\\
+
+\noindent kNN\\ 
+
+
+
+
+ 
+
+
+
+\section{Method}  
+\subsection{Tools}  
+\subsubsection{TextBlob}
+TextBlob is an open source Python library for performing simple language processing tasks. Textblob provides a simple API for common natural language processing (NLP) tasks. This library inferes underlying structures of the text's language available to computer programs for analysis and manipulation.
+
+\subsubsection{Using TextBlob}
+
+The basic steps to use TextBlob are:
+
+\begin{itemize}  
+\item Creating a TextBlob object. This object takes the text - which we want to work with - as a string type.
+\item Use various methods of this object to process the text.
+\end{itemize}
+
+A TextBlob object provides several different methods that can help us to categorise and analyze a text. Here some of these methods are described briefly to show how TextBlob can be used to process the text. 
+
+\begin{description}
+  \item[Tokenization (sentences, words and noun phrases)] \hfill \\
+  The resulting TextBlob object has \texttt{.sentences} method that lists all the sentences in the text. It is possible to take the words from each of the sentence objects by using \texttt{.words} method. There is also the \texttt{.noun\_phrases} method of TextBlob object that returns the text of all noun phrases found in the text.
+  
+  \item[Part-of-speech tagging] \hfill \\
+  The \texttt{.tags} method of TextBlob object can tell us what parts of speech each word in a text corresponds to. In the resulting output, it tags different words of the text with their role in the sentence using the following tags: 
+
+  NN: noun
+
+  JJ: adjective
+
+  IN: preposition
+
+  A more complete list of tag meanings can be found on the CLiPS  \footnote{http://www.clips.ua.ac.be/pages/mbsp-tags} website.
+ 
+  \item[Word inflection] \hfill \\
+  TextBlob library has another object called \texttt{Word}. This object can be used for pluralization, singularization and lemmatization of a word. For example the Word object provides \texttt{.pluralize()} method which takes a single word and returns the plural form of that word. 
+  
+\end{description}
+
+Some of the other features of TextBlob library are:
+Sentiment analysis: .sentiment
+Classification (Naive Bayes, Decision Tree)
+Language translation and detection powered by Google Translate
+Word and phrase frequencies
+Parsing
+n-grams
+Spelling correction
+Add new models or languages through extensions
+WordNet integration
+
+
+\subsubsection{Blockspring}
+
+In order to gather a dataset as an input of TextBlob, we are going to use Blockspring. Blockspring lets us to get Wikipedia article categories and use it as our input dataset. It has different blocks for getting information from Wikipedia pages. First we need to choose 10 different categories like physics, history, anatomy, and etc. Then we will use "Get Wikipedia Sub-Categories" block from Blockspring to get Wikipedia sub-categories of our selected categories. The next step is to use "Get Wikipedia Article Content" block of Blockspring to get the content of Wikipedia articles. At the end, we have the required dataset to use it as TextBlob input. 
+
+In addition, each of the Blockspring blocks generates the required code in different languages like Python which we can use later in our program to gather the articles. 
+
+
+\subsection{Classification methods}
+\subsubsection{Naive Bayes}
+TextBlob is using naive Bayes when training and testing data. This method is a simplified version of Bayes theorem, where the denominator is considered redundant since\
+ it doesn't give us any information about the action we've looking for. So Bayes theorem can be simplified to the joint probability model as follows:
+\\\[p(C_k|x) = \frac{p(C_k)p(x|C_k)}{p(x)} \Longrightarrow p(C_k)p(x|C_k) = p(C_k,x_1,x_2,...,x_n)\]\\
+This in turn, using the chain rule, would yield us the series of probabilities \[p(C_k,x_1,x_2,...,x_n) = \]
+\[p(C_k)p(x_1,x_2,...,x_n|C_k) =\]
+\[p(C_k)p(x_1|C_k)p(x_2,...,x_n|C_k, x_1) = ... =\]
+\[p(C_k)p(x_1|C_k)p(x_2|C_k, x_1) ... p(x_n|C_k, x_1, x_2,...,x_(n-1) \]\\
+Now, if we assume that each individual action is independent, which is the naive part of naive Bayes, and given the category $C_k$, we can write the probabilities as s\
+imply $p(x_i|C_k, x_j,x_k...) = p(x_i|C_k)$. In our case, we can think of this as the probability of a word being in a text, given the category C, is strictly a matter\
+ of how often the word has occurred in such a category in our training. Then, the category will be determined by a predetermined set of keywords and their occurrence r\
+ate for the category.
+\subsubsection{Reinforcement Learning}
+Besides using the built-in Naive bayes method, a simple version of reinforcement learning is implemented to determine if the naive approach is indeed too naive. The pr\
+imary choice of method is Reinforcement Learning (RL), since we have some knowledge of this algorithm from a previous course. When constructing a reinforcement based a\
+lgorithm, it is of great importance to choose a good heuristic for determining the category, and also a grading heuristic to accompany this heuristic. The grading heur\
+istic is basically a formula with fixed variables but varying multipliers for the variables. RL then aims to maximize the ``score'' when categorizing text based on the\
+ heuristic that scores a result. Then you edit one of the multipliers with a fixed, small value until a maximum result is found. You then iterate over the variables, i\
+ncrementing them slightly trying to find the best categorizer is created. The problem is that you cannot be sure that the maximum result is a local or a global one, wh\
+ich means that you need to make drastic jumps from time to time to try and find a better value. This method is quite time consuming but can possibly yield a better res\
+ult than the Naive Bayes method, depending on how good our heuristic is.
+
+\section{Results}
+
+\section{Discussion}
+
+
+\begin{thebibliography}{9}
+\bibitem{HistoryofTextAnalytics} 
+Grimes, Seth. “A Brief History of Text Analytics”, b-eye-network, October 20, 2007.
+
+\bibitem{ChallengesInTextAnalytics}
+“Mastering new Challenges in Text Analytics”, IBM Business Analytics, May 2010, p. 1.
+
+\bibitem{wikipedia}
+https://en.wikipedia.org/wiki/Wikipedia:About. Retrieved 2015-10-04.
+
+\bibitem{textblob}
+https://textblob.readthedocs.org/en/dev/. Retrieved 2015-10-04.
+
+\bibitem{AI}
+Russell, Stuart. Norvig, Peter. "Artificial Intelligence, a Modern Approach" 3 ed. Pearson. 
+
+\bibitem{historyNLP}
+Lichtig, Ryan. "The history of Natural Language Processing". \textit{ETHW}. 
+
+\bibitem{ColumbiaUniversity}
+Collins, Michael. "Language modelling". Columbia University. 2013.
+
+\bibitem{columbia}
+http://www.cs.columbia.edu/~mcollins/lm-spring2013.pdf
+
+\bibitem{handouts}
+http://web.mit.edu/6.02/www/s2012/handouts/3.pdf
+
+\bibitem{hstein}
+http://cis.poly.edu/hstein/pubs/ecir.pdf
+
+\bibitem{NLPwithPython}
+Natural Language Processing with Python, AvSteven Bird,Ewan Klein,Edward Loper, chapter 6
+
+\end{thebibliography}
+
+
+
+%1. Artificial intelligence a modern approach, stuart russel....
+%2. $http://ethw.org/The_History_of_Natural_Language_Processing$ (måste förbättra källa?)
+
+
+
+%We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two alternatives. We will do this by implementing a heuristic that uses hidden Markov models, where we will research which variables should be included and give them a certain weight. If we have enough time, we will try to improve the heuristic by applying some sort of machine learning to the heuristic. If this is the case, it will probably be a simple version of policy gradient reinforcement learning (pgrl). We will work in python \textgreater= 3.0 and use some sort of natural language library to do the statistical analysis of the texts. Example libraries are TextBlob (https://textblob.readthedocs.org/en/dev) and the Natural Language Tool Kit (http://www.nltk.org)
+%\newline
+
+
+\end{document}
