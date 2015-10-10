@@ -9,3 +9,4 @@
 
 # Ignore the virtual environment
 /venv
+.ropeproject
