@@ -6,7 +6,13 @@ import wikipedia
 from textblob import TextBlob
 from textblob.classifiers import NaiveBayesClassifier
 
+
+
+
 '''
+This is a basic test of the Naive Bayes classifier belonging to the TextBlob (which uses the NLTK).
+
+
 Wikipedia API: https://pypi.python.org/pypi/wikipedia/
 Blockspring: https://open.blockspring.com/bs/get-wikipedia-articles-in-category
 TextBlob: http://textblob.readthedocs.org/en/dev/
