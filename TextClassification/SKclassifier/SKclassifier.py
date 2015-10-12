@@ -20,49 +20,65 @@ class TextClassifier():
 	def __init__(self):
 		self.categories = None
 
-	def createTrainingData(self, categories, numberOfArticles):
+	def get_nouns(self, nouns, articleFile):
+		for noun in nouns:
+			if '=' in noun : continue
+			try:
+				noun.decode('ascii')
+			except:
+				continue
+			articleFile.write(noun + " ")
+			articleFile.close
 
+	def createTrainingData(self, categories, numberOfArticles):
 		for category in categories:
 			print category
 			titleList = list(blockspring.runParsed("get-wikipedia-articles-in-category",{ "category": category, "limit": numberOfArticles }).params.values())
 			categoryList = titleList[0]
 			articleFile = open(category,'w+')
-			
+
 			for cat in categoryList:
 
 				articleFile.write("[" + category + "] ")
 				articleContent = TextBlob(wikipedia.page(cat).content.encode('UTF-8'))
 				nouns = articleContent.noun_phrases
+				self.get_nouns(nouns, articleFile)
+				'''
 				for noun in nouns:
-					#Removes weird words, only writes if they are not weird.
-					if '=' in noun : continue
-					try: 
-						noun.decode('ascii')
-					except:
-						continue
-					articleFile.write(noun + " ")
+				#Removes weird words, only writes if they are not weird.
+				if '=' in noun : continue
+				try:
+				noun.decode('ascii')
+				except:
+				continue
+				articleFile.write(noun + " ")
 
-			articleFile.close
+				articleFile.close
+				'''
+
+
 
 
 	def createTestData(self, articleList):
 		for article in articleList:
 			articleFile = open(article + "_test", 'w+')
+			article_nouns = open(article + "_nouns", 'w+')
+			articleContentTwo = TextBlob(wikipedia.page(article).content.encode('UTF-8'))
 			articleContent = wikipedia.page(article).content.encode('UTF-8')
+			nouns = articleContentTwo.noun_phrases
+			self.get_nouns(nouns, article_nouns)
 			articleFile.write(articleContent)
-			articleFile.close		
-
-
+			articleFile.close
 
 
 tc = TextClassifier()
 
-#tc.createTrainingData(["Physics", "Mathematics", "Medicine", "History", "Psychology", "Biology", "Philosophy", "Computing"], 7)
-#tc.createTestData(["Integral","Polynomial", "Particle","Special Relativity", "Hospital",
-	#French Revolution", "Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing"])
+tc.createTrainingData(["Physics", "Mathematics", "Medicine", "History", "Psychology", "Biology", "Philosophy", "Computing"], 7)
+tc.createTestData(["Integral","Polynomial", "Particle","Special Relativity", "Hospital",
+	    "French Revolution", "Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing"])
 
-testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital", "French Revolution", 
-"Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing"]
+testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital", "French Revolution",
+            "Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing"]
 testData = list()
 
 for test in testList:
@@ -70,7 +86,7 @@ for test in testList:
 	testData.append(data)
 
 
-categories = ["Physics", "Mathematics", "Sports", "Medicine", "History", "Psychology", "Biology", "Philosophy", "Computing"]
+categories = ["Physics", "Mathematics", "Medicine", "History", "Psychology", "Biology", "Philosophy", "Computing"]
 
 content = list()
 for category in categories:
@@ -85,7 +101,7 @@ X = vectorizer.fit_transform(content)
 classifier = MultinomialNB().fit(X, content)
 
 print "MNB finished"
-joblib.dump(classifier, 'storedMNB.pkl') 
+joblib.dump(classifier, 'storedMNB.pkl')
 
 Xtest = vectorizer.transform(testData)
 
