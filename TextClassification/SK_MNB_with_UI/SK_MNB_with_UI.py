@@ -5,9 +5,11 @@ import sys
 import json
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.externals import joblib
+import numpy as np
+from scipy import arange
 from sklearn.feature_extraction.text import CountVectorizer
 from textblob import TextBlob
-from sklearn.pipeline import Pipeline
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -41,8 +43,7 @@ class TextClassifier():
 
 
 	def createMNB(self, content):
-		
-		vectorizer = CountVectorizer(max_df=1)
+		vectorizer = TfidfVectorizer(max_df=1)
 		X = vectorizer.fit_transform(content)
 		classifier = MultinomialNB().fit(X,content)
 		
@@ -57,17 +58,6 @@ class TextClassifier():
 
 
 	def messagesToUser(self):
-
-
-
-		boolNewData = raw_input("Do you want to create new training data? y/n: ")
-
-		if (boolNewData == "y"):
-			print "Note that this will overwrite any previous files you had for these categories."
-			trainingSize = int(raw_input("How many articles per category do you want to train with?"))
-			self.createTrainingData(self.categories, trainingSize)
-
-
 		content = list()
 		for category in self.categories:
 			content.append(open(category, 'r').read())
@@ -117,7 +107,7 @@ class TextClassifier():
 			testData.append(data)
 
 
-		vectorizer = CountVectorizer(max_df = 1)
+		vectorizer = TfidfVectorizer(max_df = 1)
 
 		vectorizer.fit_transform(content)
 
@@ -166,6 +156,6 @@ class TextClassifier():
 		
 
 
-tc = TextClassifier(["Physics", "Mathematics", "Medicine"])
+tc = TextClassifier(["Physics", "Mathematics", "Medicine", "History", "Sports", "Psychology", "Biology", "Philosophy", "Computing"])
 
 tc.messagesToUser()
