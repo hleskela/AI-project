@@ -53,6 +53,8 @@ As of today (October 2015), almost five million articles have been published on 
 
 \vspace{3mm}
 
+\textcolor{red}{This should be updated.}
+
 - What techniques are well suited to the problem of text categorization? What are their respective advantages and disadvantages?
 
 \vspace{3mm}
@@ -94,8 +96,7 @@ Another method which will not be mentioned much here but more in the chapter "me
 \subsection{Tools}  
 \subsubsection{TextBlob}
 
-\textcolor{red}{Kort förklaring om varför man inte kan använda detta i större skala -> varför vi bytte till scikit}
-TextBlob is an open source Python library for performing simple language processing tasks. Textblob provides a simple API for common natural language processing (NLP) tasks. This library inferes underlying structures of the text's language available to computer programs for analysis and manipulation.
+TextBlob is an open source Python library for performing simple language processing tasks. Textblob provides a simple API for common natural language processing (NLP) tasks. This library inferres underlying structures of the text's language available to computer programs for analysis and manipulation. It was used mainly for its noun extraction feature.
 
 \subsubsection{Using TextBlob}
 
@@ -140,15 +141,20 @@ Add new models or languages through extensions
 WordNet integration
 
 
-\subsubsection{Blockspring}
+\subsubsection{SciKit learn}
 
-In order to gather a dataset as an input of TextBlob, we are going to use Blockspring. Blockspring lets us to get Wikipedia article categories and use it as our input dataset. It has different blocks for getting information from Wikipedia pages. First we need to choose 10 different categories like physics, history, anatomy, and etc. Then we will use "Get Wikipedia Sub-Categories" block from Blockspring to get Wikipedia sub-categories of our selected categories. The next step is to use "Get Wikipedia Article Content" block of Blockspring to get the content of Wikipedia articles. At the end, we have the required dataset to use it as TextBlob input. 
+The TextBlob Naive Bayes classifier was used at first, but turned out to be too slow for our purposes. The Multinomial Naive Bayes (henceforth abbreviated MNB) classifier of SciKit-learn (henceforth abbreviated sk-learn) was then used instead, which performed significantly better. To perform the classification one has to use a vectorizer which transforms the data from text to a matrix, which was done by the built-in CountVectorizer. We decided to use the TfIdfVectorizer for feature extraction, where TfIdf referrs to the tf-idf transform or \textit{term-frequency - Inverse-document-frequency} transform\cite{skfeatures}. This transform is combined with the CountVectorizer to form the model that is the TfIdVectorizer.\\
 
-In addition, each of the Blockspring blocks generates the required code in different languages like Python which we can use later in our program to gather the articles. 
+By term frequency we mean that the importance of a word in a document is proportional to its frequency of occurence, which is often called Luhn's assumption\cite{luhn}. To complement this one may add the inverse document frequency factor to the model, which gives more importance towards less commons words in the document as well. This was conceived by Spärck\cite{sparck}, and may be summarised as:\\
+\\
+\textit{The specificity of a term is inversely proportional to the number of documents in which it occurs.} \\
+
+This means that weight will be given to words that occur more in some specific documents.
+\subsubsection{Blockspring and the wikipedia API}
+
+In order to gather a dataset as an input to TextBlob and consequently SciKit, we used Blockspring. Blockspring has the ability to get articles belonging to specific Wikipedia categories and subcategories, which we used as our input dataset. It has different blocks for getting information from Wikipedia pages. First one chooses the different categories one wants, such as physics, history or medicine. Then we used the "Get Wikipedia Sub-Categories" block from Blockspring to get the Wikipedia sub-categories of our selected categories. The original plan was to use Blockspring to retrieve the articles themselves as well, but as it had problems doing so without errors we got the content of the articles with an API called wikipedia instead. 
 
 
-\textcolor{red}{Add info on wikipedia API}
-\textcolor{red}{Add info on scikit}
 
 
 \subsection{Classification methods}
@@ -179,6 +185,18 @@ ich means that you need to make drastic jumps from time to time to try and find 
 ult than the Naive Bayes method, depending on how good our heuristic is.
 
 \section{Results}
+
+\textcolor{red}{Add some introduction to results part}
+
+\subsection{Multinomial Naive Bayes with SciKit}
+
+A varying number of articles were classified in one of nine categories: \\
+Physics, Mathematics, Medicine, History, Sports, Psychology, Philosophy, Computing and Biology.\\
+\\
+The train data size was varied as well, with the following results:
+
+\includegraphics{
+
 \textcolor{red}{resultat med olika storlekar på träningsdata}\\
 \textcolor{red}{resultat namn resultatet för ickefiltrerad data (ej plockat ut substantiv) kolla hur den funkar och disskutera detta?}\\
 \textcolor{red}{Svårklassificerad data och varför de är svåra att klassificera, ta med spindelexempel för att illustrera}\\
@@ -225,6 +243,18 @@ Natural Language Processing with Python, AvSteven Bird,Ewan Klein,Edward Loper, 
 
 \bibitem{ethw}
 http://ethw.org/The\_History\_of\_Natural\_Language\_Processing
+
+\bibitem{skfeatures}
+%http://scikit-learn.org/stable/modules/feature_extraction.html
+
+\bibitem{tfidf}
+Rajaraman, A, Ullman, J. D. (2011). "Data Mining". Mining of Massive Datasets. pp. 7-9.
+
+\bibitem{luhn}
+Luhn,Hans Peter (1957). "A Statistical Approach to Mechanized Encoding and Searching of Literary Information". IBM Journal of research and development (IBM) 1 (4): p. 315.
+
+\bibitem{sparck}
+Spärck Jones, K. (1972). "A Statistical Interpretation of Term Specificity and Its Application in Retrieval". Journal of Documentation 28: 11–21.
 
 \end{thebibliography}
 

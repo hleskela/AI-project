@@ -160,7 +160,6 @@ testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital"
 "Second World War", "Ancient Rome", "Pharmaceutical Drug", "Vaccine", "World Health Organization", "St Augustine",
 "Baruch Spinoza", "Random-access memory"]
 
-
 #This specifies the correct categories of the test list above, and it is used to print the accuracy of
 #the classifier.
 
@@ -183,6 +182,9 @@ clean the files created. This could not be handled fully with try/except clauses
 as far as we found. Creating new test data is not a problem, as it does not use blockspring.
 
 '''
+
+
+testList_difficult = []
 
 #TextClassifier.createTestData(testList)
 #TextClassifier.createTrainingData(categories, 5)
