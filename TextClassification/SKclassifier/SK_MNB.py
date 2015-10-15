@@ -104,30 +104,32 @@ class TextClassifier():
 
 
 testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital", "French Revolution", 
-"Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing", 
-"Ancient Greece", "Babylon", "Socrates", "Alfred Adler", "Albert Einstein", "Andrew Wiles",
-"NHL", "Elephant", "Napoleon", "Michael Jordan", "Hashmap", "Health care", "CERN", "Genghis Khan",]
-"Lacrosse", "Niels Bohr", "Richard Feynman", "Andromeda Galaxy", "William James", "Bobsleigh",
-"Gene", "DNA", "Charles Darwin", "Torus", "Abstract algebra", "Riemann surface", 
-"Second World War", "Ancient Rome", "Pharmaceutical Drug", "Vaccine", "World Health Organization", "St Augustine",
-"Baruch Spinoza", "Random-access memory"]
-
+	    "Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing", 
+	    "Ancient Greece", "Babylon", "Socrates", "Alfred Adler", "Albert Einstein", "Andrew Wiles",
+	    "NHL", "Elephant", "Napoleon", "Michael Jordan", "Hashmap", "Health care", "CERN", "Genghis Khan",
+	    "Lacrosse", "Niels Bohr", "Richard Feynman", "Andromeda Galaxy", "William James", "Bobsleigh",
+	    "Gene", "DNA", "Charles Darwin", "Torus", "Abstract algebra", "Riemann surface", 
+	    "Second World War", "Ancient Rome", "Pharmaceutical Drug", "Vaccine", "World Health Organization", "St Augustine",
+	    "Baruch Spinoza", "Random-access memory"]
 
 correctCategories = ["Mathematics", "Mathematics", "Physics", "Physics", "Medicine", "History",
-"Sports", "Biology", "Psychology", "Philosophy", "Computing",
-"History", "History", "Philosophy", "Psychology", "Physics", "Mathematics", "Sports", "Biology", "History",
-"Sports", "Computing", "Medicine", "Physics", "History","Sports", "Physics", "Physics", "Physics", "Psychology", "Sports", 
-"Biology", "Biology", "Biology", "Mathematics", "Mathematics", "Mathematics",
-"History", "History", "Medicine", "Medicine", "Medicine", "Philosophy", "Philosophy", "Computing"]
+		     "Sports", "Biology", "Psychology", "Philosophy", "Computing",
+		     "History", "History", "Philosophy", "Psychology", "Physics", "Mathematics", "Sports", "Biology", "History",
+		     "Sports", "Computing", "Medicine", "Physics", "History","Sports", "Physics", "Physics", "Physics", "Psychology", "Sports", 
+		     "Biology", "Biology", "Biology", "Mathematics", "Mathematics", "Mathematics",
+		     "History", "History", "Medicine", "Medicine", "Medicine", "Philosophy", "Philosophy", "Computing"]
+
 
 
 categories = ["Physics", "Mathematics", "Medicine", "History", "Sports", "Psychology", "Biology", "Philosophy", "Computing"]
 
-#tc.createTestData(testList)
-#TextClassifier.createTrainingData(categories, 5)
-
+tc = TextClassifier(testList, correctCategories, categories,1.0)
+tc.createTestData(testList)
+TextClassifier.createTrainingData(categories, 5)
+"""
 for alpha in arange(0.9,1.0,0.1):			#ignore this...
 	
-	tc = TextClassifier(testList, totalCorrectCategories, categories,alpha)
+	tc = TextClassifier(testList, CorrectCategories, categories,alpha)
 	#print ("Training size: " + str(trainingSize))
 	tc.createClassifier()
+"""
