@@ -2,6 +2,9 @@
 *_nouns_ngram
 *_test
 *.npy
+*_nouns_bigram
+*_catngram
+
 
 # Files from pdflatex I think we shouldn't keep backed up
 *.aux
