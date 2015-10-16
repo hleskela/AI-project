@@ -196,26 +196,7 @@ tokenized_words.most_common(WORDS_TO_CHECK)
 
 
 def heuristic(file, words_to_check_uni, words_to_check_bi):
-    '''
-    category should be what unigrams and bigrams says it is.
-    if they match, perfect!
-    if they differ, then one of the two should be valued more and decide.
-     above can differ between iterations to see which gives the best score
-
-     so perhaps the category function is something like this:
-     if (cat(unigram) == cat(bigram))
-        return cat(unigram) or bigram, doesnt matter
-    else:
-     return one of these, based on some deciding factor that we can change.
-     or perhaps compare the arrays with the score for each category, and pick
-     the one with the highest total score together.
-
-     the number of words used for unigrams and digrams should be two different
-     values, which we will alter to see which combination of values gives the
-     most correct categories
-     '''
-    #unigram_category = category_decider(file+"_nouns", words_to_check_uni) #???????????????????
-    unigram_category = category_decider(file+"_nouns", words_to_check_uni) #???????????????????
+    unigram_category = category_decider(file+"_nouns", words_to_check_uni)
     bigram_category = category_decider(file+"_nouns_bigram", words_to_check_bi)
     if(unigram_category[0] == bigram_category[0]):
         return CATEGORIES[unigram_category[0]]
