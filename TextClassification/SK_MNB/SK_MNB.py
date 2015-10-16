@@ -50,15 +50,15 @@ class TextClassifier():
 		X = vectorizer.fit_transform(content)
 
 		boolLoad = raw_input("Do you want to load a classifier? y/n: ")
-		if (boolLoad == "y"): 
+		if (boolLoad == "y"):
 			try: classifier = joblib.load("storedMNB.pkl")
-			except: 
-				classifier = MultinomialNB(self.alpha).fit(X, content) 
+			except:
+				classifier = MultinomialNB(self.alpha).fit(X, content)
 				print "No previous classifiers found. Creating a new one..."
-		else: 
-			classifier = MultinomialNB(self.alpha).fit(X, content) 
+		else:
+			classifier = MultinomialNB(self.alpha).fit(X, content)
 			boolSave = raw_input("Do you want to save your new classifier? This will overwrite the previously saved classifier. y/n: ")
-			if (boolSave == "y"): joblib.dump(classifier, 'storedMNB.pkl') 
+			if (boolSave == "y"): joblib.dump(classifier, 'storedMNB.pkl')
 
 		print "MNB finished"
 
@@ -66,7 +66,7 @@ class TextClassifier():
 
 		predicted = classifier.predict(Xtest)
 
-		#This prints the results. 
+		#This prints the results.
 		counter = 0
 		correctCounter = 0
 		for doc, category in zip(testList, predicted):
@@ -101,7 +101,7 @@ class TextClassifier():
 
 			for cat in titleList:
 				try: articleContent = TextBlob(wikipedia.page(cat).content.encode('UTF-8'))
-				except: 
+				except:
 					print "Error in getting article"
 					continue
 				try: nouns = articleContent.noun_phrases
@@ -111,7 +111,7 @@ class TextClassifier():
 				for noun in nouns:
 					#Removes weird words, only writes if they are not weird.
 					if '=' in noun : continue
-					try: 
+					try:
 						noun.decode('ascii')
 					except:
 						continue
@@ -119,20 +119,20 @@ class TextClassifier():
 
 			subcategories = list(blockspring.runParsed("get-wikipedia-sub-categories", { "category": category}).params.values())[0]
 
-			for subcategory in subcategories: 
+			for subcategory in subcategories:
 				print ("Subcategory: " + str(subcategory))
 				try:
 					titleList = list(blockspring.runParsed("get-wikipedia-articles-in-category",{ "category": subcategory, "limit": 2 }).params.values())
-				except: 
+				except:
 					print "Error in getting articles in subcategory"
 					continue
 
 				categoryList = titleList[0]
-				
+
 				for cat in categoryList:
 					try:
 						articleContent = TextBlob(wikipedia.page(cat).content.encode('UTF-8'))
-					except: 
+					except:
 						"Error in getting article."
 						continue
 					try: nouns = articleContent.noun_phrases
@@ -142,12 +142,12 @@ class TextClassifier():
 					for noun in nouns:
 						#Removes weird words, only writes if they are not weird.
 						if '=' in noun : continue
-						try: 
+						try:
 							noun.decode('ascii')
 						except:
 							continue
 						articleFile.write(noun + " ")
-					
+
 			articleFile.close
 
 	@staticmethod
@@ -156,16 +156,16 @@ class TextClassifier():
 			articleFile = open(article + "_test", 'w+')
 			articleContent = wikipedia.page(article).content.encode('UTF-8')
 			articleFile.write(articleContent)
-			articleFile.close		
+			articleFile.close
 
 
 
-testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital", "French Revolution", 
-"Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing", 
+testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital", "French Revolution",
+"Manchester United", "Evolution", "Freudianism", "Aristotle", "Alan Turing",
 "Ancient Greece", "Babylon", "Socrates", "Alfred Adler", "Albert Einstein", "Andrew Wiles",
 "NHL", "Elephant", "Napoleon", "Michael Jordan", "Hashmap", "Health care", "CERN", "Genghis Khan",
 "Lacrosse", "Niels Bohr", "Richard Feynman", "Andromeda Galaxy", "William James", "Bobsleigh",
-"Gene", "DNA", "Charles Darwin", "Torus", "Abstract algebra", "Riemann surface", 
+"Gene", "DNA", "Charles Darwin", "Torus", "Abstract algebra", "Riemann surface",
 "Second World War", "Ancient Rome", "Pharmaceutical Drug", "Vaccine", "World Health Organization", "St Augustine",
 "Baruch Spinoza", "Random-access memory"]
 
@@ -173,11 +173,11 @@ testList = ["Integral","Polynomial", "Particle","Special Relativity", "Hospital"
 #the classifier.
 
 correctCategories = ["Mathematics", "Mathematics", "Physics", "Physics", "Medicine", "History",
-"Sports", "Biology", "Psychology", "Philosophy", "Computing",
-"History", "History", "Philosophy", "Psychology", "Physics", "Mathematics", "Sports", "Biology", "History",
-"Sports", "Computing", "Medicine", "Physics", "History","Sports", "Physics", "Physics", "Physics", "Psychology", "Sports", 
-"Biology", "Biology", "Biology", "Mathematics", "Mathematics", "Mathematics",
-"History", "History", "Medicine", "Medicine", "Medicine", "Philosophy", "Philosophy", "Computing"]
+		     "Sports", "Biology", "Psychology", "Philosophy", "Computing",
+		     "History", "History", "Philosophy", "Psychology", "Physics", "Mathematics", "Sports", "Biology", "History",
+		     "Sports", "Computing", "Medicine", "Physics", "History","Sports", "Physics", "Physics", "Physics", "Psychology", "Sports",
+		     "Biology", "Biology", "Biology", "Mathematics", "Mathematics", "Mathematics",
+		     "History", "History", "Medicine", "Medicine", "Medicine", "Philosophy", "Philosophy", "Computing"]
 
 
 categories = ["Physics", "Mathematics", "Medicine", "History", "Sports", "Psychology", "Biology", "Philosophy", "Computing"]
@@ -202,4 +202,3 @@ as far as we found. Creating new test data is not a problem, as it does not use 
 
 tc = TextClassifier(testList, correctCategories, categories,1.0) #The alpha value seems to be generally inconsequental.
 tc.createClassifier()
-
