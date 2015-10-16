@@ -43,7 +43,7 @@ class TextClassifier():
 
 
 	def createMNB(self, content):
-		vectorizer = TfidfVectorizer(max_df=1)
+		vectorizer = TfidfVectorizer(min_df=1)
 		X = vectorizer.fit_transform(content)
 		classifier = MultinomialNB().fit(X,content)
 		
@@ -107,7 +107,7 @@ class TextClassifier():
 			testData.append(data)
 
 
-		vectorizer = TfidfVectorizer(max_df = 1)
+		vectorizer = TfidfVectorizer(min_df = 1)
 
 		vectorizer.fit_transform(content)
 

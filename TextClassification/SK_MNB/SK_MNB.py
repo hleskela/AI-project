@@ -44,7 +44,7 @@ class TextClassifier():
 
 		print "All data created"
 
-		vectorizer = TfidfVectorizer(min_df=1)
+		vectorizer = TfidfVectorizer(max_df=1)
 
 
 		X = vectorizer.fit_transform(content)
@@ -184,9 +184,11 @@ as far as we found. Creating new test data is not a problem, as it does not use 
 '''
 
 
-testList_difficult = []
+testList_under_3000 = ["Celtuce", "Imago", "Sternorrhyncha", "Psoralea esculenta", "Cyclanthaceae", "Toad", "Caiman", "White Currant", "Siluridae","Myrtales"]
+testList_under_5000 = ["Rajiformes", "Anobiidae", "Saccopharyngiformes", "Cobra","Carassius", "Larva", "Ostracoderm","Treeswift", "Soldier Beetle", "Dactylopteridae"]
+difficultCorrectCategories = ["Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology","Biology"]
 
-#TextClassifier.createTestData(testList)
+#TextClassifier.createTestData(testList_under_3000)
 #TextClassifier.createTrainingData(categories, 5)
 
 tc = TextClassifier(testList, correctCategories, categories,1.0)
