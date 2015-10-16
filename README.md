@@ -79,3 +79,10 @@ Issuing the following command after setting up the virtual environment will down
 ```
    $ pip install -r requirements.txt
 ```
+
+### Run the code:
+
+In order to run the code, you just need to run the main.py file as follow:
+```
+   $ python main.py
+```

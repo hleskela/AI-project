@@ -1,3 +1,10 @@
+*_nouns
+*_nouns_ngram
+*_test
+*.npy
+*_nouns_bigram
+
+
 # Files from pdflatex I think we shouldn't keep backed up
 *.aux
 *.pdf
@@ -9,3 +16,16 @@
 
 # Ignore the virtual environment
 /venv
+.ropeproject
+
+#TODO.txt#
+#test#
+Biology
+Computing
+History
+Mathematics
+Medicine
+Philosophy
+Physics
+Psychology
+Sports
