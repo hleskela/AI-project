@@ -1,4 +1,4 @@
-\documentclass[a4paper]{article}
+\documentclass[a4paper,10pt]{article}
 
 \setcounter{secnumdepth}{3}
 \usepackage[english]{babel}
@@ -10,24 +10,30 @@
 \usepackage{color}
 \usepackage[colorinlistoftodos]{todonotes}
 \usepackage{array}
+\usepackage{fancyhdr}
 
 \title{Classification of Wikipedia articles using natural language processing}
-\author{
-  Berenji, Sarah\\
-  \texttt{sarah.berenji@gmail.com}
-  \and
-  Forsten, Andreas\\
-  \texttt{andreasforsten@gmail.com}
-  \and
-  Leskelä, Hannes\\
-  \texttt{hleskela@kth.se}
-  \and
-  Letzner, Josefine\\
-    \texttt{joletzner@gmail.com}
-}
+\author{\hspace*{-0.5cm}
+GROUP 16\\
+\begin{tabular}{cccc}
+Berenji, Sarah & Forsten, Andreas & Leskelä, Hannes & Letzner, Josefine\\
+19830915-1028 & 19910805-2730 & 19910807-0997 & 199107305204 \\
+sarahba@kth.se & aforsten@kth.se & hleskela@kth.se & jletzner@kth.se \\
+\includegraphics[width=0.13\linewidth]{sarah.jpeg} &
+\includegraphics[width=0.13\linewidth]{andreas.jpeg} &
+\includegraphics[width=0.13\linewidth]{hannes.jpg} &
+\includegraphics[width=0.13\linewidth]{josefine.jpeg}
+\end{tabular}}
 \date{2015-10-04}
+\pagestyle{fancy}
+\setlength{\headheight}{15pt}
+\fancyhf{}
+\lhead{DD2380 ai15}
+\rhead{S. Berenji, A. Forsten, H. Leskelä, J. Letzner}
 \begin{document}
 \maketitle
+\thispagestyle{fancy}
+
 \begin{abstract}
 
 \noindent In this project we have developed two different text analysers focusing on categorizing the content of Wikipedia articles. One analyser was based on Naive Bayes and the other was built on reinforcement learning techniques. The train and test datasets consisted of Wikipedia articles which were gathered with the aid of Blockspring and the Wikipedia API. The results showed that both Naive Bayes and the Reinforcement learning approach worked well for classifying articles but that the Naive Bayes might be faster and in need of less training data in this specific case.
@@ -102,44 +108,19 @@ The basic steps to use TextBlob are:
 \item Use various methods of this object to process the text.
 \end{itemize}
 
-A TextBlob object provides several different methods that can help us to categorise and analyze a text. Here some of these methods are described briefly to show how TextBlob can be used to process the text. 
+A TextBlob object provides several different methods that can help us to categorise and analyze a text. Out of these, we only used the tokenization to create the different ngrams used in the reinforcement learning algorithm. 
 
-\textcolor{red}{To Hannes and Sarah: What parts of this should be left? Is all of this used?}
 \begin{description}
   \item[Tokenization (sentences, words and noun phrases)] \hfill \\
   The resulting TextBlob object has \texttt{.sentences} method that lists all the sentences in the text. It is possible to take the words from each of the sentence objects by using \texttt{.words} method. There is also the \texttt{.noun\_phrases} method of TextBlob object that returns the text of all noun phrases found in the text.
-  
-  \item[Part-of-speech tagging] \hfill \\
-  The \texttt{.tags} method of TextBlob object can tell us what parts of speech each word in a text corresponds to. In the resulting output, it tags different words of the text with their role in the sentence using the following tags: 
-
-  NN: noun
-
-  JJ: adjective
-
-  IN: preposition
-
-  A more complete list of tag meanings can be found on the CLiPS  \footnote{http://www.clips.ua.ac.be/pages/mbsp-tags} website.
- 
-  \item[Word inflection] \hfill \\
-  TextBlob library has another object called \texttt{Word}. This object can be used for pluralization, singularization and lemmatization of a word. For example the Word object provides \texttt{.pluralize()} method which takes a single word and returns the plural form of that word. 
  
 \end{description}
-Some of the other features of TextBlob library are:
-Sentiment analysis: .sentiment
-Classification (Naive Bayes, Decision Tree)
-Language translation and detection powered by Google Translate
-Word and phrase frequencies
-Parsing
-n-grams
-Spelling correction
-Add new models or languages through extensions
-WordNet integration
 
 
 \subsubsection{SciKit learn} 
 
 \label{sec:sklearn}
-The TextBlob Naive Bayes classifier was used at first, but turned out to be too slow for our purposes. We tried building classifiers with whole texts as train data, but as it performed poorly we changed to using just article nouns. The Multinomial Naive Bayes (henceforth abbreviated MNB) classifier of SciKit-learn (henceforth abbreviated sk-learn) was then used instead, which performed significantly better. To perform the classification one has to use a vectorizer which transforms the data from text to a matrix, which was done by the built-in CountVectorizer. We decided to use the TfIdfVectorizer for feature extraction, where TfIdf referrs to the tf-idf transform or \textit{term-frequency - Inverse-document-frequency} transform\cite{skfeatures}. This transform is combined with the CountVectorizer to form the model that is the TfIdVectorizer.\\
+The TextBlob Naive Bayes classifier was used at first, but turned out to be too slow for our purposes. We tried building classifiers with whole texts as train data, but as it performed poorly we changed to using just article nouns. The Multinomial Naive Bayes (henceforth abbreviated MNB) classifier of SciKit-learn (henceforth abbreviated sk-learn) was then used instead, which performed significantly better. To perform the classification one has to use a vectorizer which transforms the data from text to a matrix, which was done by the built-in CountVectorizer. We decided to use the TfIdfVectorizer for feature extraction, where TfIdf refers to the tf-idf transform or \textit{term-frequency - Inverse-document-frequency} transform\cite{skfeatures}. This transform is combined with the CountVectorizer to form the model that is the TfIdVectorizer.\\
 
 \noindent By term frequency we mean that the importance of a word in a document is proportional to its frequency of occurence, which is often called Luhn's assumption\cite{luhn}. To complement this one may add the inverse document frequency factor to the model, which gives more importance towards less commons words in the document as well. This was conceived by Spärck\cite{sparck}, and may be summarised as:\\
 \\
@@ -154,7 +135,7 @@ The maximum document frequency is the reverse of this; the threshold on how many
 
 \subsubsection{Blockspring and the wikipedia API}
 
-In order to gather a dataset as an input to TextBlob and consequently SciKit, we used Blockspring. Blockspring has the ability to get articles belonging to specific Wikipedia categories and subcategories, which we used as our input dataset. It has different blocks for getting information from Wikipedia pages. First one chooses the different categories one wants, such as physics, history or medicine. Then we used the "Get Wikipedia Sub-Categories" block from Blockspring to get the Wikipedia sub-categories of our selected categories. The original plan was to use Blockspring to retrieve the articles themselves as well, but as it had problems doing so without errors we got the content of the articles with an API called wikipedia instead. 
+In order to gather a dataset as an input to TextBlob and consequently SciKit, we used Blockspring. Blockspring has the ability to get articles belonging to specific Wikipedia categories and subcategories, which we used as our input dataset. It has different blocks for getting information from Wikipedia pages. First one chooses the different categories one wants, such as physics, history or medicine. Then we used the "Get Wikipedia Sub-Categories" block from Blockspring to get the Wikipedia sub-categories of our selected categories. The original plan was to use Blockspring to retrieve the articles themselves as well, but as it had problems doing so without errors, so we got the content of the articles with an API called wikipedia instead. 
 
 
 
@@ -162,32 +143,23 @@ In order to gather a dataset as an input to TextBlob and consequently SciKit, we
 \subsection{Classification methods}
 \subsubsection{Naive Bayes} 
 
-Naive Bayes is a simplified version of Bayes theorem, where the denominator is considered redundant since\
- it doesn't give us any information about the action we've looking for. So Bayes theorem can be simplified to the joint probability model as follows:
+Naive Bayes is a simplified version of Bayes theorem, where the denominator is considered redundant since it doesn't give us any information about the action we've looking for. So Bayes theorem can be simplified to the joint probability model as follows:
 \\\[p(C_k|x) = \frac{p(C_k)p(x|C_k)}{p(x)} \Longrightarrow p(C_k)p(x|C_k) = p(C_k,x_1,x_2,...,x_n)\]\\
 This in turn, using the chain rule, would yield us the series of probabilities \[p(C_k,x_1,x_2,...,x_n) = \]
 \[p(C_k)p(x_1,x_2,...,x_n|C_k) =\]
 \[p(C_k)p(x_1|C_k)p(x_2,...,x_n|C_k, x_1) = ... =\]
 \[p(C_k)p(x_1|C_k)p(x_2|C_k, x_1) ... p(x_n|C_k, x_1, x_2,...,x_(n-1) \]\\
-Now, if we assume that each individual action is independent, which is the naive part of naive Bayes, and given the category $C_k$, we can write the probabilities as s\
-imply $p(x_i|C_k, x_j,x_k...) = p(x_i|C_k)$. In our case, we can think of this as the probability of a word being in a text, given the category C, is strictly a matter\
- of how often the word has occurred in such a category in our training. Then, the category will be determined by a predetermined set of keywords and their occurrence 
-rate for the category.\\
+Now, if we assume that each individual action is independent, which is the naive part of naive Bayes, and given the category $C_k$, we can write the probabilities as simply $p(x_i|C_k, x_j,x_k...) = p(x_i|C_k)$. In our case, we can think of this as the probability of a word being in a text, given the category C, is strictly a matter of how often the word has occurred in such a category in our training. Then, the category will be determined by a predetermined set of keywords and their occurrence rate for the category.\\
 
-\noindent In this paper multinomial Naive Bayes was used, which is one of the two classical implementations of Naive Bayes (the other being Bernoulli Naive Bayes). The word multinomial referrs to the fact that we have a multinomial distribution, where each event is the occurrence of a word in a single document.\\
+\noindent In this paper multinomial Naive Bayes was used, which is one of the two classical implementations of Naive Bayes (the other being Bernoulli Naive Bayes). The word multinomial refers to the fact that we have a multinomial distribution, where each event is the occurrence of a word in a single document.\\
 
 \noindent Naive Bayes has been shown to work quite well despite its assumption of independence. The reason for this is that the dependencies tend to cancel out\cite{NBindependence}. 
 
 \subsubsection{Reinforcement Learning}
-Besides using the built-in Naive bayes method, a simple version of reinforcement learning is implemented to determine if the naive approach is indeed too naive. The pr\
-imary choice of method is Reinforcement Learning (RL), since we have some knowledge of this algorithm from a previous course. When constructing a reinforcement based a\
-lgorithm, it is of great importance to choose a good heuristic for determining the category, and also a grading heuristic to accompany this heuristic. The grading heur\
-istic is basically a formula with fixed variables but varying multipliers for the variables. RL then aims to maximize the ``score'' when categorizing text based on the\
- heuristic that scores a result. Then you edit one of the multipliers with a fixed, small value until a maximum result is found. You then iterate over the variables, i\
-ncrementing them slightly trying to find the best categorizer is created. The problem is that you cannot be sure that the maximum result is a local or a global one, wh\
-ich means that you need to make drastic jumps from time to time to try and find a better value. This method is quite time consuming but can possibly yield a better res\
-ult than the Naive Bayes method, depending on how good our heuristic is.
+Besides using the built-in Naive bayes method, a simple version of reinforcement learning is implemented to determine if the naive approach is indeed too naive. The primary choice of method is Reinforcement Learning (RL), since we have some knowledge of this algorithm from a previous course. When constructing a reinforcement based a
+lgorithm, it is of great importance to choose a good heuristic for determining the category, and also a grading heuristic to accompany this heuristic. The grading heuristic is basically a formula with fixed variables but varying multipliers for the variables. RL then aims to maximize the ``score'' when categorizing text based on the heuristic that scores a result. Then you edit one of the multipliers with a fixed, small value until a maximum result is found. You then iterate over the variables, incrementing them slightly trying to find the best categorizer is created. The problem is that you cannot be sure that the maximum result is a local or a global one, which means that you need to make drastic jumps from time to time to try and find a better value. This method is quite time consuming but can possibly yield a better result than the Naive Bayes method, depending on how good our heuristic is.
 
+Our heuristic is, much like Naive Bayes, both naive and based on statistics. First it gets the frequency distribution of the nouns in the categories we've decided to test on, both with respect to unigrams and bigrams. Then, getting the same information from the text that we wish to categorize, it matches the text to a category based on the number of words in the frequency list that exist in the texts frequency distribution. It does two different guesses, one based on the unigrams, one based on the bigrams. If they match, that is the category that will be used as a final guess. If they don't match, the algorithm will look at both of the results from the guesses, joining together the number of matching words for each category to try and find if that will yield a better result. The number of top occuring words that are used to match a text to a category is what changes in our algorithm, thus we're trying to find which number of uni- and bigrams respectively that yields the best categorizer, based on simple statistics.
 \section{Results}
 
 \subsection{Multinomial Naive Bayes with SciKit}
@@ -196,7 +168,7 @@ A varying number of articles were classified in one of nine categories: \\
 Physics, Mathematics, Medicine, History, Sports, Psychology, Philosophy, Computing and Biology.\\
 \subsubsection{min\textunderscore df, max\textunderscore df and max\textunderscore features}
 \label{sec:parameters}
-For information about min\textunderscore df, max\textunderscore df and max\textunderscore features referr to section \ref{sec:sklearn}.
+For information about min\textunderscore df, max\textunderscore df and max\textunderscore features refer to section \ref{sec:sklearn}.
 
 \noindent The tests in this section was done with a sample of twenty-five articles from the above specified categories.
 \noindent The results for the MNB with min\textunderscore df $= 1$ with varying train data size can be seen in figure \ref{fig:MNB_first} (note that min\textunderscore df $= 1$ is the default value for the vectorizers, and it does not exclude any words based on document frequency). 
@@ -235,6 +207,19 @@ For information about min\textunderscore df, max\textunderscore df and max\textu
 \noindent The test data was then changed to very short biology articles on Wikipedia. First, ten articles with byte length shorter than three thousand bytes were tested, and the classifier had an accuracy of 80\% on them. When the byte length was increased to five thousand the accuracy went up to 100\% again.
 \noindent The data on byte length was gathered from wikipedia.\footnote{\url{https://en.wikipedia.org/wiki/Wikipedia:Short_popular_vital_articles}}
 
+\subsection{Reinforcement learning}
+Since the same categories and sample data used in the Naive Bayes classification was used in the reinforcement learning algorithm, we refer to section 4.1 and 4.1.2 for information regarding that.
+
+\subsection{Parameter variation and the optimal values}
+Using a set increment of ten significant words, starting from 20 going up to 200 in both uni- and bigrams, we achieved the following results:
+
+\begin{figure}[h!]
+  \centering
+    \includegraphics[width=1.0\textwidth]{reinforcement_plot.png}
+  \caption{The correct number of categories (out of the maximum value of 45) using reinforcement learning.}
+  \label{fig:reinforcement_plot}
+\end{figure}
+
 
 \section{Discussion}
 
@@ -248,27 +233,38 @@ The parameters in section \ref{sec:parameters} were tested to find out the optim
 
 \noindent Tests were then done on smaller articles, but as the main difficulty of our classifier is not article length but differences the nouns used compared to the training data, the classifier still performed quiet well. For example, 'Myrtales' and 'White Currant' has an approximately equal byte length (at the date of retrieval, October 2015), and both of them are flower articles. Our classifier did not classify 'White Currant' article correctly, but the 'Myrtales' article was correctly classified as biology. The reason is quiet obvious when one looks at their content. 'Myrtales' contains words such as 'DNA' and 'Gene' which occur frequently in all biology articles. 'White Currant' does contain the words 'species' and 'plant', but it also contains the words 'Iron', 'Copper' and 'Manganese', which might be the reason for it being classified as 'Computing'. Article length does matter, but mainly for the reason that there is a higher probability of these sorts of mistakes occurring.
 
+\subsection{Reinforcement Learning}
+ 
+The reason for choosing reinforcement learning in this project was twofold. For one, we have previous experience in using it, although we primarily used Policy Gradient Reinforcement Learning and not a brute force mechanism as in this project. And secondly, we wanted another artificial intelligence algorithm that was simple in its\
+implementation and use, that could illustrate the differences between naive Bayes and other algorithms in simple classification problems.
+When constructing the policy we decided to do it in a simple, linear way, with fewer parameters and more variance in the parameter values. This meant that we could explore a larger section of the sample space, and also focus on two parameters we investigated to be really important.\\
+One of the both positive and negative aspects with the algorithm is that the success is based purely on the policy that you decide to use to categorize the articles. This means that you can take far more into concideration than purely the statistics of the word, but also that if you don't choose the correct parameters, or choose too many, the algorithm cannot be trained to categorize texts satisfactory. The brute force implementation is also very naive in its approach of finding the optimal values, thus taking a long time to find a local or global minimum or maximum.\\
+We can see based upon the results that the main contributor for correctly categorizing texts where the unigram statistics. Bigrams only slightly effected the outcome, and mainly when the number of bigrams taken into consideration were $>100.$ This is most likely due to the higher match rate amongst the unigrams, and that we would have needed a lot more training data to get a better representation of the bigrams. Also, the algorithm could have been improved by putting a weight on the matching bigrams, to perhaps value them more (or less), depending on what gave us a better score.
+ 
+
 
 \subsection{Comparison between Naive Bayes and Reinforcement Learning}
 
-A strength of Naive Bayes is that it needs little training data\cite{NBtrainsize}. This was seen in the results, as it performed well even if only two or three articles were used for training. Another strength is that it is fast, as it assumes independence\cite{NBfast} of the words (each distribution is one-dimensional).\\
+A strength of Naive Bayes is that it needs little training data\cite{NBtrainsize}. This was seen in the results, as it performed well even if only two or three articles were used for training. Another strength is that it is fast, as it assumes independence\cite{NBfast} of the words (each distribution is one-dimensional). \\
 
 \noindent However, while Naive Bayes worked well for the classification done in this project, it might not perform well with other sorts of NLP problems, as it is known as a bad estimator. This means that the probabilites it assigns to its classifications are inaccurate, but it does not matter as long as the maximum probability is assigned to the correct category\cite{NBestimation}.\\
 
-\textcolor{red}{To Hannes and Sarah: Is reinforcement learning better at estimation? What effect does this have?}
-
-\textcolor{red}{To Hannes and Sarah: What differences exist in how we train the classifiers? In Naive bayes everything has to be done by hand. How is it with reinforcement learning?}
+\noindent Both Naive Bayes and reinforcement learning needs to be trained in order to correctly categorize the texts. The difference is that reinforcement learning can train itself to some extent, by grading the result from its actions and trying to find the best result. This means that, given a set of possible actions and the desired goal state, reinforcement learning will grade different sets of actions according to a grading function. In more complex problems this is better illustrated, and  means that there doesn't have to be a specific goal in mind, just a wish to find the local min or max for a certain problem.\cite{DogWalk} 
 
 \noindent The efficiency of the reinforcement learning depends on its policy, which may require a lot of work to implement well. However, this also makes the method more dynamic than Naive Bayes, as it can handle more types of problems.
-
-\textcolor{red}{To Hannes and Sarah: Something about reinforcement learning + HMMs? If you dare to answer their questions on it...}
 
 \subsection{Further work}
 Since the accuracy obtained by the Naive Bayes classifier was close to 100\% a natural extension of the project would be to try to categorize the articles in subcategories and evaluate performance. As the difficulty of the problem is increased the Naive Bayes classifier might also need to be improved. This could be done by investigating what other relevant features of a text there are except nouns, or to use more varied train data. 
 
+Regarding reinforcement learning, many improvements could be made. Besides swapping the brute force approach with a more intelligent one, such as policy gradient walks, could significantly speed up the training process. Also, the policy is quite crude, and doesn't take in consideration a bit more advanced topics like for instance sentiment analysis. 
+
+Also, the data could have been improved in a number of ways, by for instance trying to eliminate low quality nouns, use lemma reduction (running, runs $=>$ run) or looking at diversifying your training corpus.
 \subsection{Conclusion}
 
 Naive Bayes with nouns as training data seems to work well for this problem, as it correctly classified articles almost 100\% of the times even with only a small training sample. However, it might not be well suited for other types of problems, such as classifying text type or classification within other types of texts\cite{NBpoems}. For these types of problems reinforcement learning might be more well suited, as it is more dynamic.
+
+\section{Contributions}
+We the members of project group16 unanimously declare that we have all equally contributed toward the completion of this project.
  
 \begin{thebibliography}{9}
 
@@ -303,8 +299,9 @@ Marton et Al. "On Compression-Based Text Classification". 27th European Conferen
 
 
 \bibitem{skfeatures}
-\url{http://scikit-learn.org/stable/modules/feature_extraction.html}
 Retrieved 2015-10-13.
+\url{http://scikit-learn.org/stable/modules/feature_extraction.html}
+
 \bibitem{tfidf}
 Rajaraman, A, Ullman, J. D. (2011). "Data Mining". Mining of Massive Datasets. pp. 7-9.
 
@@ -326,6 +323,9 @@ Jin, David. Lin, Sally (2011). "Advances in Electronic Engineering, Communicatio
 \bibitem{NBfast}
 Zhang, Harry (2004). "The optimality of Naive Bayes". University of New Brunswick. p. 1.
 
+\bibitem{DogWalk}
+Kohl, Stone (2004). "Policy Gradient Reinforcement Learning for Fast Quadrupedal Locomotion".
+\url{http://www.cs.utexas.edu/~ai-lab/pubs/icra04.pdf} Retrieved 2015-10-16
 
 \bibitem{NBestimation}
 Ibid. p. 2.
@@ -338,11 +338,5 @@ Mohammed, Iqbal.(2009). "Naive Bayes for Classical Arabic Poetry Classification"
 
 %1. Artificial intelligence a modern approach, stuart russel
 %2. $http://ethw.org/The_History_of_Natural_Language_Processing$ (måste förbättra källa?)
-
-
-
-%We've chosen to do a version of the text analyser project, where we focus on categorizing either the content of the text or the type of text, depending on the difficulty level of the two alternatives. We will do this by implementing a heuristic that uses hidden Markov models, where we will research which variables should be included and give them a certain weight. If we have enough time, we will try to improve the heuristic by applying some sort of machine learning to the heuristic. If this is the case, it will probably be a simple version of policy gradient reinforcement learning (pgrl). We will work in python \textgreater= 3.0 and use some sort of natural language library to do the statistical analysis of the texts. Example libraries are TextBlob (https://textblob.readthedocs.org/en/dev) and the Natural Language Tool Kit (http://www.nltk.org)
-%\newline
-
 
 \end{document}
