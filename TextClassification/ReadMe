@@ -1,16 +1,34 @@
-The NLTK_NBC folder contains a first test of the NLTK Naive Bayes classifier. This was abandonded due to the slowness of
-NLTK, and instead replace with SciKit (SK). It can be ignored.
 
- 
-The SK_MNB folder contains the SK_MNB.py file, together with train and test data. This was used to perform all the tests made.
-You can change the test data as you want, but we recommend that you do not change the train data, as BlockSpring can have some 
+ The libraries used are:
+ Blockspring
+ wikipedia
+ sk-learn
+ scipy
+ numpy
+ textblob
+
+
+
+
+
+The following programs should be run with python 2.
+
+
+- The SK_MNB folder contains the SK_MNB.py file, together with train and test data. This was used to perform all the tests made.
+You can change the test data as you want, but we recommend that you do not change the provided train data, as BlockSpring can have some 
 trouble retrieving much data from Wikipedia. The data will then contain information that is not supposed to be added to it,
 which has to be manually removed. Therefore you should not use the createTrainingData method. The same is true of
 the version below with a user interface, where the user previously had the choice to create new training data. We removed
 this option to prevent the user from creating unwanted errors.
 
+
+- You can load the previously stored classifier if you used the specified test data, otherwise you just choose to make a new one when prompted.
+
+- The folder also contains the SK_MNB_maxfeatures.py file, which is a copy of the SK_MNB file but instead of using min_df it is using the max_features
+parameter. This was used to generate figure 3 in the report, and it may be ignored unless you want to replicate that.
+
  
-The SK_MNB_with_UI folder contains the file SK_MNB_with_UI.py. This can be run as it is, all the necessary training data is available. 
+- The SK_MNB_with_UI folder contains the file SK_MNB_with_UI.py. This can be run as it is, all the necessary training data is available. 
 This is useful if one wants to test some specific articles, as the article names are not hard coded as they are in the SK_MNB.py file.
 NOTE: Articles chosen are not allowed to be disambiguous on Wikipedia, as BlockSpring can not handle them. 
 

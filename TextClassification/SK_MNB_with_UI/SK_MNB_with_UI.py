@@ -124,6 +124,12 @@ class TextClassifier():
 			counter += 1
 
 
+	'''
+	Generally, you should use the provided training data and not this method. Blockspring partially corrupts
+	the data it provides if you try to obtain too much, so the files will have to be cleaned
+	if you do decide to use it.
+	'''
+
 	def createTrainingData(self, categories, numberOfArticles):
 		for category in categories:
 			titleList = list(blockspring.runParsed("get-wikipedia-articles-in-category",{ "category": category, "limit": numberOfArticles }).params.values())

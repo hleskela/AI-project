@@ -44,7 +44,7 @@ class TextClassifier():
 
 		print "All data created"
 
-		vectorizer = TfidfVectorizer(max_df=1)
+		vectorizer = TfidfVectorizer(min_df=1)
 
 
 		X = vectorizer.fit_transform(content)
@@ -76,6 +76,15 @@ class TextClassifier():
 			counter += 1
 		accuracy = str(correctCounter/len(testList))
 		print ("Accuracy: " + accuracy)
+
+
+
+
+	'''
+	Generally, you should use the provided training data and not this method. Blockspring partially corrupts
+	the data it provides if you try to obtain too much, so the files will have to be cleaned
+	if you do decide to use it.
+	'''
 
 	@staticmethod
 	def createTrainingData(categories,numberOfArticles):
@@ -174,6 +183,12 @@ correctCategories = ["Mathematics", "Mathematics", "Physics", "Physics", "Medici
 categories = ["Physics", "Mathematics", "Medicine", "History", "Sports", "Psychology", "Biology", "Philosophy", "Computing"]
 
 
+
+
+testList_under_3000_bytes = ["Celtuce", "Imago", "Sternorrhyncha", "Psoralea esculenta", "Cyclanthaceae", "Toad", "Caiman", "White Currant", "Siluridae","Myrtales"]
+testList_under_5000_bytes = ["Rajiformes", "Anobiidae", "Saccopharyngiformes", "Cobra","Carassius", "Larva", "Ostracoderm","Treeswift", "Soldier Beetle", "Dactylopteridae"]
+difficultCorrectCategories = ["Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology","Biology"]
+
 '''
 Use the finished training data in the folder copy_of_train_data. Put it in the same directory as this program.
 This data has been cleaned from errors in it, which may occur when one tries to get too much data from
@@ -182,13 +197,8 @@ clean the files created. This could not be handled fully with try/except clauses
 as far as we found. Creating new test data is not a problem, as it does not use blockspring.
 '''
 
-
-testList_under_3000 = ["Celtuce", "Imago", "Sternorrhyncha", "Psoralea esculenta", "Cyclanthaceae", "Toad", "Caiman", "White Currant", "Siluridae","Myrtales"]
-testList_under_5000 = ["Rajiformes", "Anobiidae", "Saccopharyngiformes", "Cobra","Carassius", "Larva", "Ostracoderm","Treeswift", "Soldier Beetle", "Dactylopteridae"]
-difficultCorrectCategories = ["Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology", "Biology","Biology"]
-
-#TextClassifier.createTestData(testList_under_3000)
+#TextClassifier.createTestData(testList)
 #TextClassifier.createTrainingData(categories, 5)
 
-tc = TextClassifier(testList, correctCategories, categories,1.0)
+tc = TextClassifier(testList, correctCategories, categories,1.0) #The alpha value seems to be generally inconsequental.
 tc.createClassifier()
